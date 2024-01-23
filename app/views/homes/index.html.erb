@@ -1,1 +1,51 @@
-<h1>Welcome To My Home Page</h1>
+<button type="button" class="btn btn-primary" id="yogi" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  All Student record Open
+</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Popup Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="studentsTableBody">
+        <p>This is the content of the popup. Customize it as needed.</p>
+      </div>
+      <div class="modal-footer">  
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#yogi').click(function () {
+            $.ajax({
+                method: 'GET',
+                url: 'students',
+                dataType: 'json',
+                success: function (data) {
+        
+          $('#studentsTableBody').empty();
+
+         
+          $.each(data.student, function (index, student) {
+            $('#studentsTableBody').append(
+              '<tr>' +
+                '<td>' + student.id + '</td>' +
+                '<td>' + student.first_name + '</td>' +
+                '<td>' + student.last_name + '</td>' +
+                '<td>' + student.email + '</td>' +
+                '</tr>'
+            );
+          });
+        },errors: function (xhr, status, error) {
+                    console.log(error);
+                },
+            });
+        });
+    });
+</script>
+
